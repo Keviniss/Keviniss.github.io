@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keviness. - 极简个人主页</title>
+    <style>
+        /* 核心变量定义，采用苹果常用的高级灰与纯粹黑白 */
+        :root {
+            --bg-color: #fbfbfd;
+            --text-primary: #1d1d1f;
+            --text-secondary: #86868b;
+            --accent-color: #0066cc;
+            --nav-bg: rgba(251, 251, 253, 0.8);
+            --font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI", Arial, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.47059;
+            font-weight: 400;
+            letter-spacing: -0.022em;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* 顶部毛玻璃导航栏 */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 5%;
+            background: var(--nav-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-primary);
+            margin-left: 2rem;
+            font-size: 0.9rem;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            opacity: 1;
+        }
+
+        /* 页面容器与大面积留白 */
+        .container {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 0 5%;
+        }
+
+        section {
+            padding: 20vh 0 10vh;
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* 排版与字体层级 */
+        h1 {
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 600;
+            line-height: 1.05;
+            letter-spacing: -0.015em;
+            margin-bottom: 1.5rem;
+        }
+
+        h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 600;
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+        }
+
+        p.subtitle {
+            font-size: clamp(1.2rem, 2vw, 1.5rem);
+            color: var(--text-secondary);
+            font-weight: 400;
+            max-width: 600px;
+            margin-bottom: 3rem;
+            line-height: 1.4;
+        }
+
+        /* 作品集卡片极简设计 */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .project-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            cursor: pointer;
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .project-desc {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        /* 按钮设计 */
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.8rem;
+            background-color: var(--text-primary);
+            color: #fff;
+            border-radius: 980px; /* 胶囊按钮 */
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+            transform: scale(1.02);
+        }
+
+        /* 底部版权 */
+        footer {
+            padding: 4rem 0;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(0,0,0,0.05);
+        }
+
+        /* 滚动进入动画 (通过 JS 触发) */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .fade-in-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">Keviness.</div>
+        <div class="nav-links">
+            <a href="#about">简介</a>
+            <a href="#projects">项目</a>
+            <a href="#contact">联系</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section id="about">
+            <div class="fade-in-up">
+                <h1>你好，<br>我是 Keviness。</h1>
+                <p class="subtitle">专注于系统底层研发与网络工程。热爱用优雅的代码解决复杂的工程问题，探索科技与效率的边界。</p>
+                <a href="#contact" class="btn">联系我</a>
+            </div>
+        </section>
+
+        <section id="projects">
+            <div class="fade-in-up">
+                <h2>精选项目。</h2>
+            </div>
+            <div class="project-grid fade-in-up">
+                <div class="project-card">
+                    <div class="project-title">Linux 内核态监控引擎</div>
+                    <div class="project-desc">基于 LKM 与 Ring Buffer 实现的高精度资源追踪与审计引擎，深入探索操作系统底层机制。</div>
+                </div>
+                <div class="project-card">
+                    <div class="project-title">ROS 自动化机器人</div>
+                    <div class="project-desc">融合 CenterNet 目标检测的自动化控制系统，实现从算法层到硬件执行的完整闭环。</div>
+                </div>
+                <div class="project-card">
+                    <div class="project-title">极客鲸 GeekWhale</div>
+                    <div class="project-desc">科技内容自媒体品牌，分享从量化交易系统（QMT）到 AI 效率工具的实战经验与思考。</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <div class="fade-in-up">
+                <h2>保持联系。</h2>
+                <p class="subtitle">无论是技术交流、全职工作机会，还是关于技术分享的探讨，都欢迎随时与我沟通。</p>
+                <a href="mailto:hello@example.com" class="btn" style="background-color: var(--accent-color);">发送邮件</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container fade-in-up">
+            &copy; 2026 Keviness. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target); // 动画只触发一次
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.fade-in-up').forEach(element => {
+                observer.observe(element);
+            });
+        });
+    </script>
+</body>
+</html>
